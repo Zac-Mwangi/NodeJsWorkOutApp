@@ -22,16 +22,16 @@ const WorkoutForm = () => {
 
   const url = "https://nodejsworkoutappapi.onrender.com";
 
-  // const Loader = () => (
-  //   <Dna
-  //     visible={true}
-  //     height="80"
-  //     width="80"
-  //     ariaLabel="dna-loading"
-  //     wrapperStyle={{}}
-  //     wrapperClass="dna-wrapper"
-  //   />
-  // );
+  const Loader = () => (
+    <Dna
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{}}
+      wrapperClass="dna-wrapper"
+    />
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
