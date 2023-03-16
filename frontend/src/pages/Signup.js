@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { useSignup } from "../hooks/useSignup"
 
+import { Dna } from "react-loader-spinner";
+
+
 const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,6 +34,23 @@ const Signup = () => {
 
       <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
+
+      {isLoading ? (
+          <>
+            {" "}
+            <Dna
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+          </>
+        ) : (
+          <></>
+        )}
+
     </form>
   )
 }

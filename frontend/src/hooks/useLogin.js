@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
+// loader
+
+
 export const useLogin = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
   const url = "https://nodejsworkoutappapi.onrender.com";

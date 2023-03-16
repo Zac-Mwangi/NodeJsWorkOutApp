@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
+// https://mhnpd.github.io/react-loader-spinner/docs/components/dna
+
 // loader
 import { Dna } from "react-loader-spinner";
+import { is } from "date-fns/locale";
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext();
@@ -15,18 +18,20 @@ const WorkoutForm = () => {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
+  const [isLoading, setLoading] = useState(false);
+
   const url = "https://nodejsworkoutappapi.onrender.com";
 
-  const loader = (
-    <Dna
-      visible={true}
-      height="80"
-      width="80"
-      ariaLabel="dna-loading"
-      wrapperStyle={{}}
-      wrapperClass="dna-wrapper"
-    />
-  );
+  // const Loader = () => (
+  //   <Dna
+  //     visible={true}
+  //     height="80"
+  //     width="80"
+  //     ariaLabel="dna-loading"
+  //     wrapperStyle={{}}
+  //     wrapperClass="dna-wrapper"
+  //   />
+  // );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +40,8 @@ const WorkoutForm = () => {
       setError("You must be logged in");
       return;
     }
+
+    setLoading(true);
 
     const workout = { title, load, reps };
 
@@ -47,13 +54,14 @@ const WorkoutForm = () => {
       },
     });
     const json = await response.json();
-    <loader/>
 
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyFields);
+      setLoading(false);
     }
     if (response.ok) {
+      setLoading(false);
       setTitle("");
       setLoad("");
       setReps("");
@@ -64,36 +72,51 @@ const WorkoutForm = () => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New Workout</h3>
+    <>
+      <form className="create" onSubmit={handleSubmit}>
+        <h3>Add a New Workout</h3>
 
-      <label>Excersize Title:</label>
-      <input
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        className={emptyFields.includes("title") ? "error" : ""}
-      />
+        <label>Excersize Title:</label>
+        <input
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          className={emptyFields.includes("title") ? "error" : ""}
+        />
 
-      <label>Load (in kg):</label>
-      <input
-        type="number"
-        onChange={(e) => setLoad(e.target.value)}
-        value={load}
-        className={emptyFields.includes("load") ? "error" : ""}
-      />
+        <label>Load (in kg):</label>
+        <input
+          type="number"
+          onChange={(e) => setLoad(e.target.value)}
+          value={load}
+          className={emptyFields.includes("load") ? "error" : ""}
+        />
 
-      <label>Reps:</label>
-      <input
-        type="number"
-        onChange={(e) => setReps(e.target.value)}
-        value={reps}
-        className={emptyFields.includes("reps") ? "error" : ""}
-      />
+        <label>Reps:</label>
+        <input
+          type="number"
+          onChange={(e) => setReps(e.target.value)}
+          value={reps}
+          className={emptyFields.includes("reps") ? "error" : ""}
+        />
 
-      <button>Add Workout</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+        <button>Add Workout</button>
+        {error && <div className="error">{error}</div>}
+
+        {isLoading ? (
+          <Dna
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        ) : (
+          <></>
+        )}
+      </form>
+    </>
   );
 };
 
