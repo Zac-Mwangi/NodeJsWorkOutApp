@@ -10,7 +10,7 @@ const Home = () => {
   const { workouts, dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
 
-  const url = "https://nodejsworkoutappapi.onrender.com/";
+  const url = "https://nodejsworkoutappapi.onrender.com";
 
   useEffect(() => {
     const fetchWorkouts = async () => {

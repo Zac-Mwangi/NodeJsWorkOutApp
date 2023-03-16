@@ -6,7 +6,7 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
 
-  const url = "https://nodejsworkoutappapi.onrender.com/";
+  const url = "https://nodejsworkoutappapi.onrender.com";
 
   const signup = async (email, password) => {
     setIsLoading(true);
