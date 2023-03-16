@@ -11,6 +11,14 @@ const app = express()
 // middleware
 app.use(express.json())
 
+// cors
+const cors= require('cors');
+
+// Allow Cross-Origin Requests from all
+app.use(cors({
+  origin: '*'
+}));
+
 app.use((req, res, next) => {
   console.log(req.path, req.method)
   next()
